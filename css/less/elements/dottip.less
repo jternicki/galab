@@ -1,0 +1,105 @@
+.dottip-wrapper {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+}
+
+.dottip {
+  position: absolute;
+  //  top: 0;
+  //  left: 0;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+//  opacity: 0.6;
+//  .single-transition(opacity, 400ms);
+
+  &:hover {
+//    opacity: 1;
+
+    .rhomb {
+      opacity: 1;
+    }
+
+    .circle {
+      background: @color-yellow;
+      .transform(rotate(45deg));
+
+      &:before, &:after {
+        background: #000;
+      }
+    }
+
+    & + .dotline {
+      opacity: 1;
+    }
+  }
+
+  .rhomb {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #787e84;
+    .transform(rotate(45deg));
+    opacity: 0;
+    .single-transition(opacity, 400ms);
+  }
+
+  .circle {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    background: #ddeaf4;
+    .border-radius(32px);
+    .single-transition(all, 400ms);
+
+    &:before, &:after {
+      content: '';
+      position: absolute;
+      background: #cad6df;
+      .single-transition(background, 400ms);
+    }
+
+    &:before {
+      left: 15px;
+      top: 6px;
+      width: 2px;
+      height: 20px;
+    }
+
+    &:after {
+      left: 6px;
+      top: 15px;
+      width: 20px;
+      height: 2px;
+    }
+  }
+}
+
+.dotline {
+  @bg: rgba(255, 255, 255, 0.4);
+  position: absolute;
+  background: @bg;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  .single-transition(all, @main-transitions-duration);
+
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    background: @bg;
+    height: 0;
+    width: 0;
+  }
+}
+
+.dotrope {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.6);
+  .transform-origin(0);
+  opacity: 1;
+  .single-transition(opacity, @main-transitions-duration);
+}

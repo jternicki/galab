@@ -1,0 +1,13 @@
+- review all z-index
+- review all css transitions (duration)
+- back button
+
+- create less mixins for active states etc.
+- review more button, back button animation (right shift)
+- restyle blueimp gallery controls
+- make vertical line in rhomb buttons
+- review all buttons, as well as share buttons
+
+dottips:
+- make dots align from top-left corner of holder
+- fix dotline hover (make dottip overflow hidden)

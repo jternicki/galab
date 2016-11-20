@@ -1,0 +1,34 @@
+.font(@path, @filename, @family, @weight, @style) {
+  @url: '@{path}/@{filename}';
+
+  font-family: '@{family}';
+  src: url('@{url}.eot');
+  src: url('@{url}.eot?#iefix') format('embedded-opentype'),
+  url('@{url}.woff2') format('woff2'),
+  url('@{url}.woff') format('woff'),
+  url('@{url}.ttf') format('truetype');
+  font-weight: @weight;
+  font-style: @style;
+}
+
+/* Pf Agora Sans Pro */
+
+// regular
+@font-face {
+  .font('@{font-path}/pfagorasanspro', 'pfagorasanspro-reg-webfont', 'pf_agora_sans_pro', normal, normal);
+}
+
+// bold
+@font-face {
+  .font('@{font-path}/pfagorasanspro', 'pfagorasanspro-bold-webfont', 'pf_agora_sans_pro', bold, normal);
+}
+
+// italic
+@font-face {
+  .font('@{font-path}/pfagorasanspro', 'pfagorasanspro-italic-webfont', 'pf_agora_sans_pro', normal, italic);
+}
+
+// light
+@font-face {
+  .font('@{font-path}/pfagorasanspro', 'pfagorasanspro-light-webfont', 'pf_agora_sans_pro_light', normal, normal);
+}

@@ -1,0 +1,272 @@
+//
+// Appearance
+//
+.appearance(@appearance) {
+  .prefix(appearance, @appearance, webkit moz);
+}
+
+
+//
+// Border-radius
+//
+@border-radius: 5px;
+
+.border-radius(@radius: @border-radius) {
+  .prefix(border-radius, @radius, webkit moz);
+}
+
+.border-radius(@radius, @vertical-radius) {
+  .border-radius("@{radius} / @{vertical-radius}");
+}
+
+.border-top-left-radius(@radius) {
+  -moz-border-radius-topleft: @radius;
+  .prefix(border-top-left-radius, @radius, webkit);
+}
+
+.border-top-right-radius(@radius) {
+  -moz-border-radius-topright: @radius;
+  .prefix(border-top-right-radius, @radius, webkit);
+}
+
+.border-bottom-right-radius(@radius) {
+  -moz-border-radius-bottomright: @radius;
+  .prefix(border-bottom-right-radius, @radius, webkit);
+}
+
+.border-bottom-left-radius(@radius) {
+  -moz-border-radius-bottomleft: @radius;
+  .prefix(border-bottom-left-radius, @radius, webkit);
+}
+
+.border-top-radius(@radius) {
+  .border-top-left-radius(@radius);
+  .border-top-right-radius(@radius);
+}
+
+.border-right-radius(@radius) {
+  .border-top-right-radius(@radius);
+  .border-bottom-right-radius(@radius);
+}
+
+.border-bottom-radius(@radius) {
+  .border-bottom-left-radius(@radius);
+  .border-bottom-right-radius(@radius);
+}
+
+.border-left-radius(@radius) {
+  .border-top-left-radius(@radius);
+  .border-bottom-left-radius(@radius);
+}
+
+
+//
+// Box-shadow
+//
+@shadow: 0 0 5px #333;
+
+.box-shadow(@shadow: @shadow, ...) {
+  @shadows: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+  .prefix(box-shadow, @shadows, webkit moz);
+}
+
+
+//
+// Box sizing
+//
+.box-sizing(@box-sizing) {
+  .prefix(box-sizing, @box-sizing, webkit moz);
+}
+
+
+//
+// Filters
+//
+.filter(@filters...) {
+  @filters: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+  .prefix(filter, @filters);
+
+  // Enables openGL
+  .transform(translate3d(0, 0, 0));
+}
+
+
+//
+// Font-face
+//
+.font-face(@name, @font-files, @weight: normal, @style: normal) {
+  @font-face {
+    src: @font-files;
+
+    font-family: @name;
+    font-weight: @weight;
+    font-style: @style;
+  }
+}
+
+
+//
+// Gradients
+// (in Compass it is a part of Images framework)
+//
+.linear-gradient(@direction, @start, @rest, @fallback:@rest...) {
+  background: @fallback;
+  background: -webkit-linear-gradient(@direction, @start, @rest);
+  background: -moz-linear-gradient(@direction, @start, @rest);
+  background: -ms-linear-gradient(@direction, @start, @rest);
+  background: -o-linear-gradient(@direction, @start, @rest);
+  background: linear-gradient(@direction, @start, @rest);
+}
+
+
+//
+// Background
+//
+@rgba-background: .5;
+
+.rgba-background(@color, @alpha: @rgba-background) {
+  background: @color;
+
+  @hue: hue(@color);
+  @saturation: saturation(@color);
+  @lightness: lightness(@color);
+  background: hsla(@hue, @saturation, @lightness, @alpha);
+}
+
+
+//
+// Inline Block
+//
+@inline-block-alignment: middle;
+
+.inline-block(@alignment) when (@alignment = none) {
+  display: -moz-inline-stack;
+  display: inline-block;
+
+  *vertical-align: auto;
+  zoom: 1;
+  *display: inline;
+}
+
+.inline-block(@alignment: @inline-block-alignment) when not (@alignment = none) {
+  .inline-block(none);
+  vertical-align: @alignment;
+}
+
+
+//
+// Opacity
+//
+@opacity: .5;
+
+.opacity(@level: @opacity) {
+  opacity: @level;
+}
+
+.transparent() { .opacity(0); }
+.opaque() { .opacity(1); }
+
+
+//
+// Transform
+//
+@transform: translate3d(0, 0, 0);
+
+.transform(@transform: @transform) {
+  .prefix(transform, @transform);
+}
+
+
+.transform-origin(@origin) {
+  transform-origin: @origin;
+  -ms-transform-origin: @origin;
+  -webkit-transform-origin: @origin;
+  -o-transform-origin: @origin;
+  -moz-transform-origin: @origin;
+}
+
+//
+// Transition
+//
+@default-transition-property: all;
+@default-transition-duration: 1s;
+@default-transition-function: ease;
+@default-transition-delay: 0s;
+
+.transition() {
+  .single-transition;
+}
+
+.transition(@transition, ...) {
+  @transitions: ~`"@{arguments}".replace(/[\[\]]/g, '')`;
+
+  .prefix(transition, @transitions, webkit moz o);
+}
+
+.single-transition(
+  @property: @default-transition-property,
+  @duration: @default-transition-duration,
+  @function: @default-transition-function,
+  @delay: @default-transition-delay
+) {
+  .transition(~"@{property} @{duration} @{function} @{delay}");
+}
+
+.transition-property(@property: @default-transition-property) {
+  .prefix(transition-property, @property, webkit moz o);
+}
+
+.transition-duration(@duration: @default-transition-duration) {
+  .prefix(transition-duration, @duration, webkit moz o);
+}
+
+.transition-timing-function(@timing-function: @default-transition-function) {
+  .prefix(transition-timing-function, @timing-function, webkit moz o);
+}
+
+.transition-delay(@delay: @default-transition-delay) {
+  .prefix(transition-delay, @delay, webkit moz o);
+}
+
+
+// No transitions
+.no-transitions() {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+}
+
+//
+// Calc (an extension)
+//
+.e-calc(@property, @value) {
+  @{property}: -webkit-calc(@value);
+  @{property}: -moz-calc(@value);
+  @{property}: calc(@value);
+}
+
+
+//
+// Bulletproof Font-face (an extension)
+//
+.e-bulletproof-font-face(@name, @path-fonts, @file-name, @weight: 400, @style: normal, @version: "1.0") {
+  @font-face {
+    font-family: @name;
+    src: url("@{path-fonts}@{file-name}.eot?v=@{version}");
+    src: url("@{path-fonts}@{file-name}.eot?#iefix&v=@{version}") format("embedded-opentype"),
+         url("@{path-fonts}@{file-name}.woff?v=@{version}") format("woff"),
+         url("@{path-fonts}@{file-name}.ttf?v=@{version}") format("truetype"),
+         url("@{path-fonts}@{file-name}.svg?v=@{version}#@{file-name}") format("svg");
+    font-weight: @weight;
+    font-style: @style;
+  }
+}
+
+.user-select(@value) {
+  -webkit-user-select: @value;
+  -moz-user-select: @value;
+  -ms-user-select: @value;
+  -o-user-select: @value;
+  user-select: @value;
+}

@@ -1,0 +1,213 @@
+.main-slider {
+  @slideDuration: 600ms; //this value must be the same in JS
+  @padding-top: 100px;
+  @padding-bottom: 130px;
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  padding: @padding-top 0 @padding-bottom 0;
+  .box-sizing(border-box);
+
+  opacity: 0;
+  z-index: 1;
+
+  .transition(opacity 600ms, top 800ms);
+
+  &.no-transitions {
+    .no-transitions();
+
+    .slider-wrapper, .slider-container {
+      .no-transitions();
+    }
+
+    .slide {
+      .no-transitions();
+    }
+
+    .slide.current{
+      &:before, &:after {
+        .no-transitions();
+      }
+    }
+  }
+
+  &.shown {
+    opacity: 1;
+  }
+
+  &.hide-prev {
+    .button-prev {
+      .btn {
+        opacity: 0;
+        cursor: default;
+      }
+    }
+  }
+
+  &.hide-next {
+    .button-next {
+      .btn {
+        opacity: 0;
+        cursor: default;
+      }
+    }
+  }
+
+  .slider-wrapper {
+    position: relative;
+    height: 100%;
+    z-index: 1;
+    margin: 0 auto;
+    .box-sizing(border-box);
+  }
+
+  .slider-container {
+    width: 9999px; //TODO hardcode
+//    height: 100%;
+    height: 600px;
+    position: relative;
+    .micro-clearfix();
+    .transform(translate3d(0,0,0)); //needed to prevent browser to recalculate styles on transition
+    .single-transition(all, @slideDuration);
+  }
+
+  .slide {
+    position: relative;
+    float: left;
+    text-align: center;
+    opacity: 0;
+    .box-sizing(border-box);
+    padding: 40px 0 0 0;
+
+    .slide-title {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      text-align: center;
+      font: bold 30px pf_agora_sans_pro;
+      color: #353533;
+      letter-spacing: 6px;
+      margin: 0;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .slide-desc {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      font: 18px pf_agora_sans_pro;
+      color: #ddeaf4;
+      opacity: 0;
+      margin: 0;
+      line-height: 24px;
+      letter-spacing: 1px;
+      .single-transition(opacity, 100ms);
+    }
+
+    .slide-img {
+      display: inline-block;
+      max-width: 100%;
+      max-height: 100%;
+      vertical-align: middle;
+    }
+
+    &.current {
+      opacity: 1;
+      top: 0;
+
+      .box-sizing(border-box);
+      padding: 100px 0 120px 0;
+
+      .slide-title {
+        font: bold 60px pf_agora_sans_pro;
+        color: #ddeaf4;
+        letter-spacing: 12px;
+      }
+
+//      .slide-desc {
+//        opacity: 1;
+//      }
+
+      &:before, &:after {
+        content: '';
+        position: absolute;
+        width: 60px;
+        height: 0;
+        left: 50%;
+        margin-left: -30px;
+        .single-transition(height, 400ms);
+      }
+
+      &:before {
+        top: 100px; // as padding-top
+        background: url('@{img-path}/layout/t-line.png') top center no-repeat;
+      }
+
+      &:after {
+        bottom: 120px; // as padding-bottom
+        background: url('@{img-path}/layout/t-line-r.png') bottom center no-repeat;
+      }
+    }
+
+    &.prev, &.next {
+      opacity: 1;
+    }
+  }
+
+  .slide, .slide-title, .slide-desc{
+    .transform(translate3d(0,0,0)); //needed to prevent browser to recalculate styles on transition
+    .single-transition(all, @slideDuration);
+  }
+
+  .button-wrapper {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 160px;
+
+    .btn {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      margin-top: -25px;
+      .single-transition(opacity, @slideDuration);
+    }
+
+    &.button-prev {
+      left: 0;
+
+      .btn {
+        left: 50px;
+      }
+    }
+
+    &.button-next {
+      right: 0;
+
+      .btn {
+        right: 50px;
+      }
+    }
+  }
+
+  &.after-animation {
+    .slide {
+      &.current {
+        &:before, &:after {
+          height: 82px;
+        }
+
+        .slide-desc {
+          opacity: 1;
+          .single-transition(opacity, @slideDuration);
+        }
+      }
+    }
+  }
+
+}
